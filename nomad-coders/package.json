@@ -1,0 +1,14 @@
+{
+  "name": "nomad-coders",
+  "version": "1.0.0",
+  "description": "Learning TypeScript by making a Blockchain with it",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node indes.js",
+    "prestart": "tsc"
+  },
+  "dependencies": {
+    "typescript": "^4.2.4"
+  }
+}
