@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node indes.js",
+    "start": "node index.js",
     "prestart": "tsc"
   },
   "dependencies": {
