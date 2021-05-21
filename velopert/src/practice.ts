@@ -1,75 +1,68 @@
-// [ Interface ] - 클래스 또는 객체를 위한 타입을 지정할 때 사용
-interface Shape {
-  getArea(): number;
-}
-// implements: Circle은 Shape이 가진 조건들을 충족시킴을 의미
-class Circle implements Shape {
-  radius: number;
+/*
+[ Generics ] - 타입이 정해져있지 않을 때 사용
 
-  constructor(radius: number) {
-    this.radius = radius;
+any를 사용하면 type이 any로 지정되지만
+Generics를 사용하면 값이 들어왔을 때 타입이 정해져
+그 타입을 유지할 수 있음
+*/
+
+function merge<T1, T2>(a: T1, b: T2) {
+  return {
+    ...a,
+    ...b,
+  };
+}
+const merged = merge({ foo: 1 }, { bar: 2 });
+
+//-----------------------------------------------
+
+function wrap<T>(param: T) {
+  return {
+    param,
+  };
+}
+const wrapped = wrap(10);
+wrapped.param; // type: number;
+
+//-----------------------------------------------
+
+interface Items<T, V> {
+  list: T[];
+  value: V;
+}
+//= type Items<T, V> = {
+//  list: T[];
+// value: V;
+// }
+const items: Items<number, string> = {
+  list: [1, 2, 3],
+  value: 'aaa',
+};
+
+//-----------------------------------------------
+
+class Queue<T> {
+  list: T[] = [];
+
+  get length() {
+    return this.list.length;
   }
 
-  getArea() {
-    return this.radius * this.radius * Math.PI;
+  enqueue(item: T) {
+    this.list.push(item);
+  }
+
+  dequeue() {
+    return this.list.shift();
   }
 }
+const queue = new Queue<number>();
+queue.enqueue(0);
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+queue.enqueue(4);
 
-class Rectangle implements Shape {
-  constructor(public width: number, private height: number) {}
-
-  getArea() {
-    return this.width * this.height;
-  }
+while (queue.length > 0) {
+  console.log(queue.dequeue());
 }
-
-const circle: Circle = new Circle(5);
-const rectangle = new Rectangle(2, 5);
-const shapes: Shape[] = [circle, rectangle];
-
-shapes.forEach((shape) => {
-  console.log(shape.getArea());
-});
-
-// [ Type Alias ]
-/*
-interface Person  {
-  name: string;
-  age?: number;
-}
-*/
-type Person = {
-  name: string;
-  age?: number;
-};
-
-// extends (= Person &): Developert는 Person을 상속받음
-/*
-interface Developer extends Person {
-  skills: string[];
-}
-*/
-type Developer = Person & {
-  skills: string[];
-};
-
-const person: Person = {
-  name: '김사람',
-  age: 20,
-};
-
-const expert: Developer = {
-  name: '김개발',
-  skills: ['javascript', 'react', 'typescript'],
-};
-
-type People1 = Person[];
-const people: People1 = [person, expert];
-
-type Color = 'red' | 'orange' | 'yellow';
-const color: Color = 'orange';
-
-/*
-어떤 라이브러리를 위한 타입을 설정하는 경우에는 interface만 사용하는 것을 권장
-interface와 type alias 중 하나만 사용하는 것을 권장
-*/
