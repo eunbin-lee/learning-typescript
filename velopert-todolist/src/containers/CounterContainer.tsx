@@ -8,15 +8,9 @@ function CounterContainer() {
   const count = useSelector((state: RootState) => state.counter.count);
   const dispatch = useDispatch();
 
-  const onIncrease = () => {
-    dispatch(increase());
-  };
-  const onDecrease = () => {
-    dispatch(decrease());
-  };
-  const onIncreaseBy = (diff: number) => {
-    dispatch(increaseBy(diff));
-  };
+  const onIncrease = () => dispatch(increase());
+  const onDecrease = () => dispatch(decrease());
+  const onIncreaseBy = (diff: number) => dispatch(increaseBy(diff));
 
   return (
     <Counter
